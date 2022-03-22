@@ -57,14 +57,15 @@ def prepare_tensor(data, target):
         torch.FloatTensor(list(data['Gbg']))
     )
 
-    return tensor_dataset
+    data_loader = torch.utils.data.DataLoader(tensor_dataset, batch_size=1000,  shuffle=True)
+    return data_loader
 
 
 class Model(torch.nn.Module):
     def __init__(self, epc_cate_count, epc_type_count):
         super(Model, self).__init__()
-        epc_cate_hidden_dim = 4
-        epc_type_hidden_dim = 4
+        epc_cate_hidden_dim = 2
+        epc_type_hidden_dim = 2
         self.epc_cate_embed = torch.nn.Embedding(epc_cate_count, epc_cate_hidden_dim)
         self.epc_type_embed = torch.nn.Embedding(epc_type_count, epc_type_hidden_dim)
         self.bn0 = torch.nn.BatchNorm1d(12+epc_cate_hidden_dim+epc_type_hidden_dim)
