@@ -38,7 +38,7 @@ def data_prepare_and_split(data, n_fold):
 
 
 def prepare_tensor(data, target):
-
+    data[target] = [1. if int(i) == 0 else 0. for i in data[target]]
     tensor_dataset = torch.utils.data.TensorDataset(
         torch.FloatTensor(list(data[target])),
         torch.LongTensor(list(data['EPC category'])),
