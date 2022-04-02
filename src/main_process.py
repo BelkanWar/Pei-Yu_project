@@ -52,12 +52,12 @@ for train_data, test_data in utils.data_prepare_and_split(data, 3):
             
             # scheduler.step()
             print(f"training loss: {float(loss.data)}")
-    
+
     model.eval()
 
     for batch_data in test_loader:
         predict_proba = model(batch_data).detach().numpy().reshape((-1))
-        predict = np.array([0 if i <0.5 else 1 for i in predict_proba])
+        predict = np.array([0 if i <=0.5 else 1 for i in predict_proba])
         y_true = batch_data[0].numpy().astype(int)
         fpr, tpr, thresholds = metrics.roc_curve(y_true, predict_proba, pos_label=1)
         auc = metrics.auc(fpr, tpr)
